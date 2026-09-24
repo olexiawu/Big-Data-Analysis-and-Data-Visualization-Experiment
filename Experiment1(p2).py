@@ -3,7 +3,6 @@ import matplotlib.font_manager as fm
 import numpy as np
 import os
 
-# ===== 中文字体设置（直接加载字体文件，避免方框）=====
 _font_candidates = [
     r'C:\Windows\Fonts\msyh.ttc',
     r'C:\Windows\Fonts\msyh.ttf',
@@ -38,7 +37,7 @@ fig.patch.set_facecolor(bg_color)
 ax.set_facecolor(bg_color)
 
 x = np.arange(len(regions))
-bar_width = 0.3  # 原0.45的2/3
+bar_width = 0.3 
 
 # ===== 逐柱绘制纯色矩形 =====
 ax.bar(x, sales, width=bar_width, color=bar_color, zorder=2)
@@ -62,7 +61,7 @@ ax.text(5, avg + 30, f'平均值: {avg}',
 ax.set_xticks(x)
 ax.set_xticklabels(regions, color='white', fontsize=12)
 ax.set_ylim(0, 4000)
-ax.set_xlim(-0.5, len(regions) - 0.33)  # 横坐标总长度为原来的5/6
+ax.set_xlim(-0.5, len(regions) - 0.33) 
 ax.set_yticks([])
 
 # ===== 仅保留底部灰色基线 =====
