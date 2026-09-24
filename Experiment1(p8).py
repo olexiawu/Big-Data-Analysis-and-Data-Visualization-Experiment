@@ -26,8 +26,6 @@ def pick_font():
             return n
     return 'DejaVu Sans'
 FONT = pick_font()
-
-# ---------------- 数据（区域顺序与参考图一致：上到下） ----------------
 regions  = ['华东', '西南', '西北', '东北', '华南', '华北']
 sales    = [2109, 1369, 1872, 1536, 1946, 4321]
 pct      = ['-5.8%', '-17.9%', '-15.9%', '-9.3%', '-20.8%', '-13.6%']
@@ -67,10 +65,6 @@ for i in range(6):
     ax.text(683.5, y0 + 24, pct[i], fontsize=13.5, color=TEXT,
             ha='center', va='center', family=FONT, zorder=2)
 
-# ---------------- 标题/副标题/注释 ----------------
-# 标题参考为粗体（微软雅黑 Bold）：
-# - Windows 上有微软雅黑 Bold 变体 → fontweight='bold' 单次渲染（字形最接近参考）
-# - 本机（如 Noto Sans CJK SC）无 Bold 变体 → 用多重渲染模拟加粗
 if FONT == 'Microsoft YaHei':
     ax.text(59, 55, '2021年各区域销量及同比情况', fontsize=27, color=WHITE,
             ha='left', va='top', family=FONT, fontweight='bold', zorder=2)
@@ -85,8 +79,7 @@ ax.text(54, 113, '各区域商品销量同比去年均有下降，其中华南�
 ax.text(46, 570, '*注: 数据来源于公司销售系统，统计日期截至2022.01.01',
         fontsize=12.5, color=GRAY, ha='left', va='top', family=FONT, zorder=2)
 
-# ---------------- 保存 ----------------
-# 输出到脚本所在目录，避免在不同机器上路径不存在（Windows/Linux 通用）
+# 输出到脚本所在目录，避免在不同机器上路径不存在
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sales_bar.png')
 os.makedirs(os.path.dirname(out), exist_ok=True)
 fig.savefig(out, dpi=100)
