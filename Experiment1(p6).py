@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import os
 
-# ===== 中文字体：Windows 用微软雅黑，其他环境回退 Noto Sans CJK =====
 _font_candidates = [
     r'C:\Windows\Fonts\msyh.ttc',
     r'C:\Windows\Fonts\msyh.ttf',
@@ -26,7 +25,6 @@ if _font_name is None:
         plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei', 'Noto Sans CJK SC']
 plt.rcParams['axes.unicode_minus'] = False
 
-# ===== 数据（来自图2数据表：区域 / 2022年销量 / 2021年销量）=====
 regions = ['华南', '华北', '东北', '西北', '华东']
 sales_2022 = [2238, 1531, 1426, 1321, 1215]
 sales_2021 = [2066, 1436, 1531, 1265, 1003]
@@ -37,29 +35,22 @@ BG    = '#1A1E43'
 WHITE = '#FFFFFF'
 GRAY  = '#D9D9D9'
 
-# ===== 画布 867x612（与参考图同尺寸）=====
 fig, ax = plt.subplots(figsize=(8.67, 6.12), dpi=100)
 fig.patch.set_facecolor(BG)
 ax.set_facecolor(BG)
-# axes 占满全画布，用像素坐标直接放置所有元素（y 从上到下）
 ax.set_position([0, 0, 1, 1])
 ax.set_xlim(0, 867)
 ax.set_ylim(612, 0)
 ax.axis('off')
 
-# ===== 标题 / 副标题（参考图：标题 y46-82，副标题 y105-126）=====
 ax.text(58, 46, '2022年上半年各区域对比去年销量',
         fontsize=27, fontweight='bold', color=WHITE, ha='left', va='top')
 ax.text(58, 105, '2022年整体销量高于2021年，只有东北区域较2021有所下降',
         fontsize=16.5, color=WHITE, ha='left', va='top')
 
-# ===== 图例：蓝色"2022" + 红色"2021"（y164-178）=====
 ax.text(299, 164, '2022', fontsize=13, color=BLUE, ha='left', va='top')
 ax.text(516, 164, '2021', fontsize=13, color=RED, ha='left', va='top')
 
-# ===== 蝴蝶图主体 =====
-# 布局：中心线 x=446；蓝柱右端固定383向左延伸；红柱左端固定509向右延伸
-# 柱长 = 销量 × 0.102 (px)；柱高 27px；数值中心距柱外端 30px
 CENTER = 446.0
 BLUE_R = 383.0   # 蓝柱右端
 RED_L  = 509.0   # 红柱左端
