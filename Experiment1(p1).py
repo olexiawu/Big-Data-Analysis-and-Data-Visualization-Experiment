@@ -4,10 +4,8 @@ import numpy as np
 import os
 from matplotlib.colors import LinearSegmentedColormap
 
-# ===== 解决中文显示为方框的警告 =====
-# 直接加载系统中文字体文件，而不是靠字体名查找（最可靠）
 _font_candidates = [
-    r'C:\Windows\Fonts\msyh.ttc',    # 微软雅黑（Windows 自带）
+    r'C:\Windows\Fonts\msyh.ttc',   
     r'C:\Windows\Fonts\msyh.ttf',
     r'C:\Windows\Fonts\simhei.ttf',  # 黑体
     r'C:\Windows\Fonts\simsun.ttc',  # 宋体
@@ -22,15 +20,12 @@ for _fp in _font_candidates:
 if _zh_font:
     plt.rcParams['font.sans-serif'] = [_zh_font]
 else:
-    # 兜底：让 matplotlib 自己从系统里找
     plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'SimHei', 'KaiTi', 'SimSun']
 plt.rcParams['axes.unicode_minus'] = False   # 正常显示负号
 
 # ===== 数据 =====
 regions = ['华北', '华南', '东北', '西北', '西南', '华东']
 sales   = [2354, 1902, 3524, 2698, 2896, 2563]
-
-# ===== 配色（参照图一）=====
 bg_color      = '#1a1a3e'   # 深蓝紫背景
 bar_top_color = '#006fd6'   # 柱子顶部深蓝
 bar_bot_color = '#00d4ff'   # 柱子底部亮青
