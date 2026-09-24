@@ -5,7 +5,6 @@ import matplotlib.font_manager as fm
 import os
 from matplotlib.patches import Rectangle
 
-# ===== 中文字体：Windows 用微软雅黑，其他环境回退 Noto Sans CJK =====
 _font_candidates = [
     r'C:\Windows\Fonts\msyh.ttc',
     r'C:\Windows\Fonts\msyh.ttf',
@@ -38,17 +37,13 @@ BG    = '#1A1E43'
 WHITE = '#FFFFFF'
 GRAY  = '#B0B0BC'
 
-# ===== 画布 866x613（与参考图同尺寸）=====
 fig, ax = plt.subplots(figsize=(8.66, 6.13), dpi=100)
 fig.patch.set_facecolor(BG)
 ax.set_facecolor(BG)
 
-# ===== 精确设置绘图区：柱底(0值)在517px、6000在157px、组中心在133px、组距117px =====
 ax.set_position([0.073, 0.157, 0.837, 0.587])
 ax.set_xlim(-0.6, 5.6)
 ax.set_ylim(0, 6000)
-
-# ===== 柱子：蓝(销售额)偏左、红(利润)偏右、部分重叠 =====
 bar_w  = 0.256
 offset = 0.094
 n = len(quarters)
@@ -56,26 +51,18 @@ ax.bar([i - offset for i in range(n)], sales, width=bar_w,
        color=BLUE, edgecolor='none', zorder=3)
 ax.bar([i + offset for i in range(n)], profits, width=bar_w,
        color=RED, edgecolor='none', zorder=3)
-
-# ===== 柱顶数字：白色，中心在柱顶上方约21px(=304数据单位) =====
 for i, s, p in zip(range(n), sales, profits):
     ax.text(i - offset, s + 304, str(s), ha='center', va='center',
             color=WHITE, fontsize=12.5, zorder=5)
     ax.text(i + offset, p + 304, str(p), ha='center', va='center',
             color=WHITE, fontsize=12.5, zorder=5)
-
-# ===== x 轴标签：白色，柱底下方26px(=-433数据单位)，中心对齐柱组 =====
 for i, q in zip(range(n), quarters):
     ax.text(i, -433, q, ha='center', va='center',
             color=WHITE, fontsize=12, zorder=5)
-
-# ===== 去掉所有轴线和刻度 =====
 ax.set_xticks([])
 ax.set_yticks([])
 for sp in ax.spines.values():
     sp.set_visible(False)
-
-# ===== 图例：两个彩色边框文本框，叠在最后一根柱上方 =====
 leg_x0, leg_x1 = 4.86, 5.57
 box_h  = 450
 gap    = 333
