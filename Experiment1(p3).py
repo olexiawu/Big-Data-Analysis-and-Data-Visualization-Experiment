@@ -58,7 +58,7 @@ for xi, val in zip(x, sales):
     fancy = FancyBboxPatch((left, 0), bar_width, val,
                            boxstyle=f"round,pad=0,rounding_size={r}",
                            linewidth=0)
-    fancy.set_mutation_aspect(_ma)  # 关键：修正非等比例坐标下的圆角变形
+    fancy.set_mutation_aspect(_ma)
     ax.add_patch(fancy)
     fancy.set_visible(False)
 
