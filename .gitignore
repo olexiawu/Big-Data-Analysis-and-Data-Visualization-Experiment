@@ -1,0 +1,26 @@
+# Python缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pycache
+
+# PyCharm IDE配置文件夹
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Jupyter Notebook缓存（如果用到）
+.ipynb_checkpoints/
+
+# 系统生成的垃圾文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 虚拟环境（如果你后面建venv）
+venv/
+env/
