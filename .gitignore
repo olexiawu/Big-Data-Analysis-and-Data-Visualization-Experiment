@@ -1,0 +1,20 @@
+# PyCharm配置
+.idea/
+
+# Python虚拟环境
+.venv/
+venv/
+
+# Python缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 未完成的空白代码文件（不上传）
+temp_unfinished/
+
