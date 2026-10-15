@@ -1,3 +1,10 @@
+# PyCharm配置
+.idea/
+
+# Python虚拟环境
+.venv/
+venv/
+
 # Python缓存文件
 __pycache__/
 *.pyc
@@ -24,3 +31,8 @@ Thumbs.db
 # 虚拟环境（如果你后面建venv）
 venv/
 env/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
