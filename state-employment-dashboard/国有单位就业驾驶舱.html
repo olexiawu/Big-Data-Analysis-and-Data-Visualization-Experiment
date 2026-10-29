@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>国有单位就业人员 · 年度数据中枢（2016–2023）</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230E1A1E'/%3E%3Crect x='5' y='12' width='3' height='7' fill='%2338C9A8'/%3E%3Crect x='10.5' y='8' width='3' height='11' fill='%2338C9A8'/%3E%3Crect x='16' y='5' width='3' height='14' fill='%23D9A441'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0C1418;
+    --bg2:#0E181D;
+    --panel:#132027;
+    --panel2:#16262E;
+    --border:rgba(120,190,175,0.13);
+    --border-strong:rgba(120,190,175,0.28);
+    --teal:#38C9A8;
+    --teal-soft:rgba(56,201,168,0.14);
+    --gold:#D9A441;
+    --up:#4CC38A;
+    --down:#E06B5C;
+    --ink:#E9F0EF;
+    --ink2:#8497A0;
+    --grid:rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--ink);}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:20px 24px 28px;
+    background:
+      radial-gradient(1100px 420px at 78% -8%, rgba(56,201,168,0.07), transparent 60%),
+      radial-gradient(900px 380px at 8% -10%, rgba(217,164,65,0.05), transparent 55%),
+      var(--bg);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1480px;margin:0 auto;}
+
+  /* ===== 顶部 ===== */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+       padding-bottom:15px;border-bottom:1px solid var(--border-strong);}
+  .title-block{display:flex;gap:13px;align-items:flex-start;}
+  .title-mark{width:5px;align-self:stretch;border-radius:2px;flex:none;margin-top:3px;
+       background:linear-gradient(180deg,var(--gold),var(--teal));}
+  h1{font-family:Georgia,"Songti SC","STSong","SimSun",serif;font-size:24px;font-weight:700;
+     letter-spacing:1px;line-height:1.25;}
+  .sub{margin-top:7px;font-size:12px;color:var(--ink2);letter-spacing:.4px;}
+  .sub b{color:var(--teal);font-weight:600;}
+
+  /* ===== 播放控制条 ===== */
+  .console{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+       background:linear-gradient(180deg,var(--panel2),var(--panel));
+       border:1px solid var(--border);border-radius:8px;padding:11px 16px;margin:16px 0;}
+  .play-btn{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;flex:none;
+       background:var(--teal);color:#06231D;display:flex;align-items:center;justify-content:center;
+       transition:transform .15s,box-shadow .15s;}
+  .play-btn:hover{transform:scale(1.06);box-shadow:0 0 0 4px rgba(56,201,168,0.15);}
+  .play-btn svg{width:18px;height:18px;}
+  .slider-wrap{flex:1;min-width:220px;display:flex;align-items:center;gap:12px;}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:3px;outline:none;
+       background:linear-gradient(90deg,var(--teal) var(--fill,100%),rgba(255,255,255,0.1) var(--fill,100%));}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+       background:#fff;border:3px solid var(--teal);cursor:pointer;box-shadow:0 0 0 4px rgba(56,201,168,0.15);}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;
+       border:3px solid var(--teal);cursor:pointer;}
+  .year-readout{font-size:22px;font-weight:700;min-width:74px;text-align:center;
+       font-variant-numeric:tabular-nums;color:var(--teal);letter-spacing:.5px;}
+  .year-readout small{font-size:11px;color:var(--ink2);font-weight:400;display:block;letter-spacing:1px;}
+  .seg{display:flex;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .seg button{border:none;background:transparent;color:var(--ink2);font-size:11.5px;padding:6px 11px;
+       cursor:pointer;font-family:inherit;transition:all .15s;}
+  .seg button.on{background:var(--teal);color:#06231D;font-weight:600;}
+  .seg .lbl{padding:6px 9px;color:var(--ink2);cursor:default;}
+
+  /* ===== KPI ===== */
+  .kpis{display:grid;grid-template-columns:1fr;gap:13px;margin-bottom:16px;}
+  .kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);
+       border-radius:8px;padding:14px 16px;position:relative;overflow:hidden;min-height:106px;
+       display:flex;flex-direction:column;justify-content:space-between;
+       transition:border-color .25s,transform .25s;}
+  .kpi:hover{border-color:var(--border-strong);transform:translateY(-2px);}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;}
+  .kpi.k1::before{background:var(--teal);}
+  .kpi.k3::before{background:var(--gold);}
+  .kpi.k5::before{background:var(--up);}
+  .kpi .k-label{font-size:11.5px;color:var(--ink2);letter-spacing:.4px;}
+  .kpi .k-val{font-size:26px;font-weight:700;line-height:1.15;margin-top:6px;
+       font-variant-numeric:tabular-nums;letter-spacing:-.5px;}
+  .kpi .k-val small{font-size:12px;font-weight:400;color:var(--ink2);margin-left:3px;}
+  .kpi .k-note{font-size:11.5px;color:var(--ink2);margin-top:6px;line-height:1.5;}
+  .kpi .k-note .up{color:var(--up);font-weight:600;}
+  .kpi .k-note .down{color:var(--down);font-weight:600;}
+  .kpi .k-name{font-size:13.5px;font-weight:600;color:var(--teal);margin-top:5px;line-height:1.4;}
+
+  /* ===== 图表网格 ===== */
+  .grid{display:grid;grid-template-columns:1fr;gap:15px;}
+  .panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);
+       border-radius:8px;padding:15px 17px 9px;transition:border-color .25s;}
+  .panel:hover{border-color:var(--border-strong);}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .panel h3{font-size:14px;font-weight:700;letter-spacing:.3px;}
+  .p-sub{font-size:11px;color:var(--ink2);margin-top:4px;margin-bottom:2px;}
+  .chart{width:100%;height:320px;}
+  .chart.h360{height:360px;}
+  .mini-seg{display:flex;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:5px;overflow:hidden;flex:none;}
+  .mini-seg button{border:none;background:transparent;color:var(--ink2);font-size:11px;padding:5px 10px;
+       cursor:pointer;font-family:inherit;}
+  .mini-seg button.on{background:var(--teal);color:#06231D;font-weight:600;}
+
+  .footnote{margin-top:16px;font-size:11.5px;color:var(--ink2);lineHeight:1.7;line-height:1.7;
+       border:1px solid var(--border);border-left:3px solid var(--gold);
+       border-radius:6px;padding:11px 14px;background:rgba(217,164,65,0.05);}
+  .footnote b{color:var(--gold);}
+
+  @media (min-width:640px){ .kpis{grid-template-columns:repeat(3,1fr);} }
+  @media (min-width:1100px){
+    .kpis{grid-template-columns:repeat(5,1fr);}
+    .grid{grid-template-columns:repeat(12,1fr);}
+    .g-total{grid-column:span 8;} .g-rank{grid-column:span 4;}
+    .g-tree{grid-column:span 5;} .g-trend{grid-column:span 7;}
+    .g-change{grid-column:span 7;} .g-share{grid-column:span 5;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="title-block">
+      <div class="title-mark"></div>
+      <div>
+        <h1>国有单位就业人员 · 年度数据中枢</h1>
+        <div class="sub">2016 — 2023 · 19 个行业 · 单位：<b>万人</b> · 数据来源：<b>国家统计局</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 播放控制 -->
+  <div class="console">
+    <button class="play-btn" id="playBtn" title="播放/暂停"></button>
+    <div class="slider-wrap">
+      <input type="range" id="slider" min="0" max="7" step="1" value="7">
+    </div>
+    <div class="year-readout"><span id="yearText">2023</span><small>当前年份</small></div>
+    <div class="seg" id="speedSeg">
+      <span class="lbl">速度</span>
+      <button data-sp="1800">慢</button>
+      <button data-sp="1100" class="on">中</button>
+      <button data-sp="650">快</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="panel g-total">
+      <div class="panel-head"><h3>国有单位就业总量与年度变化</h3></div>
+      <div class="p-sub">柱：年末就业人员（万人），柱顶标同比 · 播放自动轮播，点击柱子切换年份</div>
+      <div class="chart h360" id="cTotal"></div>
+    </div>
+    <div class="panel g-rank">
+      <div class="panel-head">
+        <h3 id="rankTitle">行业规模 Top 10</h3>
+        <div class="mini-seg" id="rankSeg">
+          <button data-m="count" class="on">人数</button>
+          <button data-m="share">占比</button>
+        </div>
+      </div>
+      <div class="p-sub" id="rankSub">横向条形按就业人数降序</div>
+      <div class="chart h360" id="cRank"></div>
+    </div>
+    <div class="panel g-tree">
+      <div class="panel-head"><h3>行业结构矩形树图</h3></div>
+      <div class="p-sub">矩形面积 = 当年就业人数，随年份动态演变</div>
+      <div class="chart h360" id="cTree"></div>
+    </div>
+    <div class="panel g-trend">
+      <div class="panel-head"><h3>主要行业就业趋势</h3></div>
+      <div class="p-sub">点击图例可筛选 / 显示行业，单位万人</div>
+      <div class="chart h360" id="cTrend"></div>
+    </div>
+    <div class="panel g-change">
+      <div class="panel-head"><h3>行业变迁：2016 → 2023 人数增减</h3></div>
+      <div class="p-sub">绿色为净增加，红色为净减少（万人），按增减量排序</div>
+      <div class="chart h360" id="cChange"></div>
+    </div>
+    <div class="panel g-share">
+      <div class="panel-head"><h3>公共服务三行业占比持续上升</h3></div>
+      <div class="p-sub">公共管理 + 教育 + 卫生社保，占国有单位就业总量比重</div>
+      <div class="chart h360" id="cShare"></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <b>读图提示：</b>2016–2023 年国有单位就业总量由 6,170 万人降至 5,400 万人（-12.5%），但就业结构显著向公共服务集中——公共管理、教育、卫生三行业合计占比由 64.9% 升至 87.2%。2023 年电力、建筑、交通运输等行业人数较上年明显下降，可能与国有单位就业人员统计口径调整有关，跨期比较时需注意。数据来源：国家统计局。
+  </div>
+
+</div>
+
+<script src="assets/echarts.min.js"></script>
+<script>
+/* ============ 数据 ============ */
+var YEARS=[2016,2017,2018,2019,2020,2021,2022,2023];
+var TOTAL=[6170,6064,5740,5473,5563,5633,5612,5400];
+var IND={
+ "农林牧渔":[242,236,173,100,58,55,49,26],
+ "采矿业":[45,34,17,15,18,17,15,21],
+ "制造业":[159,124,73,39,46,52,52,22],
+ "电力燃气水":[176,160,134,114,102,99,95,24],
+ "建筑业":[185,154,113,80,89,89,87,36],
+ "交通仓储邮电":[366,353,264,132,108,104,94,47],
+ "信息软件":[34,27,25,20,26,28,27,17],
+ "批发零售":[82,72,61,43,48,48,46,30],
+ "住宿餐饮":[35,32,26,21,21,19,16,9],
+ "金融业":[149,143,126,89,69,66,61,58],
+ "房地产":[32,26,20,16,22,21,25,9],
+ "租赁商务":[118,117,104,99,96,95,92,61],
+ "科研技术":[215,206,183,150,152,151,146,128],
+ "水利环境":[204,196,168,130,122,121,116,110],
+ "居民服务":[21,18,19,12,12,13,13,11],
+ "教育":[1594,1582,1565,1540,1637,1663,1665,1732],
+ "卫生社保":[752,774,786,835,894,934,956,996],
+ "文化体育":[103,99,92,82,85,86,83,80],
+ "公共管理":[1658,1710,1792,1957,1957,1973,1975,1981]
+};
+var FULL={
+ "农林牧渔":"农林牧渔业","采矿业":"采矿业","制造业":"制造业",
+ "电力燃气水":"电力、燃气及水的生产和供应业","建筑业":"建筑业",
+ "交通仓储邮电":"交通运输、仓储及邮电通信业","信息软件":"信息传输、计算机服务和软件业",
+ "批发零售":"批发和零售业","住宿餐饮":"住宿和餐饮业","金融业":"金融业","房地产":"房地产业",
+ "租赁商务":"租赁和商务服务业","科研技术":"科学研究、技术服务和地质勘查业",
+ "水利环境":"水利、环境和公共设施管理业","居民服务":"居民服务和其他服务业","教育":"教育业",
+ "卫生社保":"卫生、社会保障和社会福利业","文化体育":"文化、体育和娱乐业",
+ "公共管理":"公共管理和社会组织"};
+var C={teal:'#38C9A8',gold:'#D9A441',up:'#4CC38A',down:'#E06B5C',
+  grid:'rgba(255,255,255,0.06)',ink:'#E9F0EF',ink2:'#8497A0',
+  soft:'#3A5560',mid:'#2E7D6E'};
+var PALETTE=['#38C9A8','#5FB8C4','#7BA8C9','#D9A441','#C98A4B','#4CC38A',
+  '#8FB3A8','#6B8FB0','#B8C7B8','#A98A5C'];
+
+function fmt(n){return Math.round(n).toLocaleString('zh-CN');}
+function pct(a,b){return (a-b)/b*100;}
+var state={idx:7, rankMode:'count'};
+
+/* ============ 数字滚动 ============ */
+function animateNumber(el,from,to,dur,fn){
+  var start=null;
+  function step(ts){
+    if(start===null)start=ts;
+    var t=Math.min(1,(ts-start)/dur);
+    var e=1-Math.pow(1-t,3);
+    el.textContent=fn(from+(to-from)*e);
+    if(t<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+var prev={total:null,pub:null,d16:null,hea:null};
+
+/* ============ KPI ============ */
+function kpiHTML(i){
+  var t=TOTAL[i],gov=IND["公共管理"][i];
+  var pub=IND["公共管理"][i]+IND["教育"][i]+IND["卫生社保"][i];
+  var d16=t-TOTAL[0],hea=IND["卫生社保"][i];
+  var yoy=i>0?pct(t,TOTAL[i-1]):null;
+  var hea16=pct(hea,IND["卫生社保"][0]);
+  var yoyLine=yoy===null?'基准年份，无同比数据'
+    :(yoy>=0?'同比 <span class="up">+'+yoy.toFixed(1)+'%</span>'
+           :'同比 <span class="down">'+yoy.toFixed(1)+'%</span>');
+  return ''+
+  '<div class="kpi k1"><div class="k-label">国有单位就业总量</div>'+
+    '<div class="k-val"><span id="kTotal">'+fmt(t)+'</span><small>万人</small></div>'+
+    '<div class="k-note">'+yoyLine+'</div></div>'+
+  '<div class="kpi k2"><div class="k-label">第一大行业</div>'+
+    '<div class="k-name">'+FULL["公共管理"]+'</div>'+
+    '<div class="k-note">'+fmt(gov)+' 万人 · 占 '+(gov/t*100).toFixed(1)+'%</div></div>'+
+  '<div class="kpi k3"><div class="k-label">公共服务三行业合计</div>'+
+    '<div class="k-val"><span id="kPub">'+fmt(pub)+'</span><small>万人</small></div>'+
+    '<div class="k-note">占总量 <b style="color:var(--gold)">'+(pub/t*100).toFixed(1)+'%</b></div></div>'+
+  '<div class="kpi k4"><div class="k-label">较 2016 年总量</div>'+
+    '<div class="k-val"><span id="kD16">'+(d16>=0?'+':'')+fmt(d16)+'</span><small>万人</small></div>'+
+    '<div class="k-note">'+(pct(t,TOTAL[0])>=0?'<span class="up">+':'<span class="down">')+pct(t,TOTAL[0]).toFixed(1)+'%</span></div></div>'+
+  '<div class="kpi k5"><div class="k-label">卫生社保福利（8年增长最快）</div>'+
+    '<div class="k-val"><span id="kHea">'+fmt(hea)+'</span><small>万人</small></div>'+
+    '<div class="k-note">较 2016 <span class="up">+'+hea16.toFixed(1)+'%</span></div></div>';
+}
+function animateKPI(i){
+  var t=TOTAL[i];
+  var pub=IND["公共管理"][i]+IND["教育"][i]+IND["卫生社保"][i];
+  var d16=t-TOTAL[0],hea=IND["卫生社保"][i];
+  var D=480;
+  if(prev.total===null){prev.total=t;prev.pub=pub;prev.d16=d16;prev.hea=hea;return;}
+  animateNumber(document.getElementById('kTotal'),prev.total,t,D,fmt);
+  animateNumber(document.getElementById('kPub'),prev.pub,pub,D,fmt);
+  var dEl=document.getElementById('kD16');
+  animateNumber(prev.d16===null?{textContent:0}:dEl,prev.d16,d16,D,function(v){return (v>=0?'+':'')+fmt(v);});
+  animateNumber(document.getElementById('kHea'),prev.hea,hea,D,fmt);
+  prev.total=t;prev.pub=pub;prev.d16=d16;prev.hea=hea;
+}
+
+/* ============ 播放控制 ============ */
+var playBtn=document.getElementById('playBtn');
+var slider=document.getElementById('slider');
+var yearText=document.getElementById('yearText');
+var playing=false,timer=null,speed=1100;
+var ICON_PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+var ICON_PAUSE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+playBtn.innerHTML=ICON_PLAY;
+function setPlayIcon(){playBtn.innerHTML=playing?ICON_PAUSE:ICON_PLAY;}
+function togglePlay(){
+  playing=!playing;setPlayIcon();
+  if(playing){timer=setInterval(tick,speed);}else{clearInterval(timer);}
+}
+function tick(){var n=state.idx+1;if(n>7)n=0;selectYear(n);}
+playBtn.onclick=togglePlay;
+slider.oninput=function(){selectYear(+this.value);};
+document.getElementById('speedSeg').addEventListener('click',function(e){
+  var b=e.target;if(b.tagName!=='BUTTON')return;
+  speed=+b.getAttribute('data-sp');
+  var bs=this.querySelectorAll('button');
+  for(var k=0;k<bs.length;k++)bs[k].classList.remove('on');
+  b.classList.add('on');
+  if(playing){clearInterval(timer);timer=setInterval(tick,speed);}
+});
+
+/* ============ 图表实例 ============ */
+var cTotal=echarts.init(document.getElementById('cTotal'));
+var cRank=echarts.init(document.getElementById('cRank'));
+var cTree=echarts.init(document.getElementById('cTree'));
+var cTrend=echarts.init(document.getElementById('cTrend'));
+var cChange=echarts.init(document.getElementById('cChange'));
+var cShare=echarts.init(document.getElementById('cShare'));
+
+var TT={
+  axis:{backgroundColor:'rgba(15,26,32,0.94)',borderColor:'rgba(120,190,175,0.3)',
+    borderWidth:1,textStyle:{color:C.ink,fontSize:11},padding:[8,10]},
+  item:{backgroundColor:'rgba(15,26,32,0.94)',borderColor:'rgba(120,190,175,0.3)',
+    borderWidth:1,textStyle:{color:C.ink,fontSize:11},padding:[8,10]}
+};
+
+/* ===== 总量 ===== */
+function totalOption(i){
+  return {
+    animationDuration:700,animationEasing:'cubicOut',
+    grid:{left:52,right:22,top:48,bottom:32,containLabel:true},
+    tooltip:{trigger:'axis',triggerOn:'mousemove|click',confine:true,axisPointer:{type:'shadow'},
+      backgroundColor:TT.axis.backgroundColor,borderColor:TT.axis.borderColor,
+      textStyle:TT.axis.textStyle,padding:TT.axis.padding,
+      formatter:function(p){
+        var k=p[0].dataIndex,t=TOTAL[k],s=YEARS[k]+'年\n就业总量：'+fmt(t)+' 万人';
+        if(k>0){var g=pct(t,TOTAL[k-1]);s+='\n同比：'+(g>=0?'+':'')+g.toFixed(1)+'%';}
+        return s;}},
+    xAxis:{type:'category',data:YEARS,axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},
+      axisLabel:{color:C.ink2,fontSize:12}},
+    yAxis:{type:'value',min:0,max:7000,interval:1000,
+      axisLabel:{color:C.ink2,fontSize:11,formatter:function(v){return v===0?'0':v/1000+'千万';}},
+      splitLine:{lineStyle:{color:C.grid}},axisLine:{show:false},axisTick:{show:false}},
+    series:[{type:'bar',barWidth:'52%',
+      data:TOTAL.map(function(v,k){
+        var on=k===i;
+        return {value:v,itemStyle:{
+          color:on?new echarts.graphic.LinearGradient(0,0,0,1,[
+            {offset:0,color:'#4FE0BC'},{offset:1,color:'#2BA88C'}]):'#33484F',
+          borderRadius:[3,3,0,0],
+          shadowColor:on?'rgba(56,201,168,0.35)':'transparent',shadowBlur:on?12:0}};
+      }),
+      label:{show:true,position:'top',fontSize:10.5,color:C.ink,lineHeight:14,
+        formatter:function(p){
+          var t=p.value;if(p.dataIndex===0)return fmt(t);
+          var g=pct(t,TOTAL[p.dataIndex-1]);
+          return fmt(t)+'\n'+(g>=0?'+':'')+g.toFixed(1)+'%';}}}]
+  };
+}
+
+/* ===== 排行 ===== */
+function rankOption(i,mode){
+  var rows=Object.keys(IND).map(function(k){return[k,IND[k][i]];});
+  rows.sort(function(a,b){return a[1]-b[1];});
+  var top=rows.slice(-10),names=top.map(function(r){return r[0];});
+  var vals=top.map(function(r){
+    if(mode==='share')return +(r[1]/TOTAL[i]*100).toFixed(1);
+    return r[1];
+  });
+  return {
+    animationDuration:600,animationEasing:'cubicOut',
+    grid:{left:8,right:mode==='share'?46:50,top:12,bottom:16,containLabel:true},
+    tooltip:{trigger:'axis',triggerOn:'mousemove|click',confine:true,axisPointer:{type:'shadow'},
+      backgroundColor:TT.axis.backgroundColor,borderColor:TT.axis.borderColor,
+      textStyle:TT.axis.textStyle,padding:TT.axis.padding,
+      formatter:function(p){
+        var k=names[p[0].dataIndex],raw=IND[k][i];
+        return FULL[k]+'\n'+YEARS[i]+'年：'+fmt(raw)+' 万人\n占总量 '+(raw/TOTAL[i]*100).toFixed(1)+'%';}},
+    xAxis:{type:'value',splitLine:{lineStyle:{color:C.grid}},axisLabel:{color:C.ink2,fontSize:11,
+        formatter:mode==='share'?'{value}%':'{value}'},
+      axisLine:{show:false},axisTick:{show:false}},
+    yAxis:{type:'category',data:names,axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},
+      axisLabel:{color:C.ink,fontSize:11.5,formatter:function(v){return v.length>6?v.slice(0,6)+'…':v;}}},
+    series:[{type:'bar',barWidth:'60%',
+      data:vals.map(function(v,k){
+        var col=k>=vals.length-3?C.teal:(k>=vals.length-6?C.mid:'#3A5560');
+        return {value:v,itemStyle:{color:col,borderRadius:[0,3,3,0]}};}),
+      label:{show:true,position:'right',fontSize:11,color:C.ink,
+        formatter:function(p){return mode==='share'?p.value+'%':fmt(p.value);}}}]
+  };
+}
+
+/* ===== 行业固定色（各图一致） ===== */
+var ICOLOR={
+ "公共管理":'#38C9A8',"教育":'#D9A441',"卫生社保":'#5FB8C4',
+ "科研技术":'#7BA8C9',"水利环境":'#4CC38A',"交通仓储邮电":'#C98A4B',
+ "文化体育":'#8FB3A8',"租赁商务":'#6B8FB0',"金融业":'#B8A07C',
+ "批发零售":'#94B8A8',"住宿餐饮":'#A9C4B8',"房地产":'#C0A080',
+ "建筑业":'#B07A60',"电力燃气水":'#70A89C',"制造业":'#A08868',
+ "采矿业":'#8CA0A8',"农林牧渔":'#9C8A6C',"信息软件":'#6FA8C0',"居民服务":'#B0B8A8'
+};
+
+/* ===== 矩形树图 ===== */
+function treeOption(i){
+  var rows=Object.keys(IND).map(function(k){return {name:k,value:IND[k][i],
+    itemStyle:{color:ICOLOR[k],borderColor:'#0E181D'}};});
+  rows.sort(function(a,b){return b.value-a.value;});
+  return {
+    animationDuration:750,animationEasing:'cubicOut',
+    tooltip:{trigger:'item',triggerOn:'mousemove|click',confine:true,
+      backgroundColor:TT.item.backgroundColor,borderColor:TT.item.borderColor,
+      textStyle:TT.item.textStyle,padding:TT.item.padding,
+      formatter:function(p){
+        return FULL[p.name]+'\n'+YEARS[i]+'年：'+fmt(p.value)+' 万人\n占总量 '+(p.value/TOTAL[i]*100).toFixed(1)+'%';}},
+    series:[{
+      type:'treemap',data:rows,roam:false,nodeClick:false,
+      breadcrumb:{show:false},
+      squareRatio:0.72,
+      label:{show:true,color:'#0C1418',fontSize:11,fontWeight:600,
+        formatter:function(p){
+          if(p.value>=120)return p.name+'\n'+p.value;
+          if(p.value>=55)return p.name;
+          return '';}},
+      itemStyle:{borderWidth:2,gap:2},
+      levels:[{itemStyle:{borderWidth:2,gap:2,borderColor:'#0E181D'}}]
+    }]
+  };
+}
+
+/* ===== 主要行业趋势 ===== */
+var TREND6=["公共管理","教育","卫生社保","科研技术","交通仓储邮电","水利环境"];
+function trendOption(){
+  return {
+    animationDuration:700,
+    color:TREND6.map(function(k){return ICOLOR[k];}),
+    grid:{left:50,right:22,top:42,bottom:30,containLabel:true},
+    legend:{type:'scroll',data:TREND6,top:4,textStyle:{color:C.ink2,fontSize:11},
+      itemWidth:14,itemHeight:8,pageIconColor:C.teal,pageTextStyle:{color:C.ink2}},
+    tooltip:{trigger:'axis',triggerOn:'mousemove|click',confine:true,
+      backgroundColor:TT.axis.backgroundColor,borderColor:TT.axis.borderColor,
+      textStyle:TT.axis.textStyle,padding:TT.axis.padding},
+    xAxis:{type:'category',data:YEARS,boundaryGap:false,
+      axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:{color:C.ink2,fontSize:12}},
+    yAxis:{type:'value',axisLabel:{color:C.ink2,fontSize:11},
+      splitLine:{lineStyle:{color:C.grid}},axisLine:{show:false},axisTick:{show:false}},
+    series:TREND6.map(function(k){
+      return {name:k,type:'line',data:IND[k],smooth:true,symbol:'circle',symbolSize:6,
+        lineStyle:{width:2.5},emphasis:{focus:'series'},
+        markLine:{symbol:'none',silent:true,lineStyle:{color:'rgba(255,255,255,0.18)',type:'dashed'},
+          label:{color:C.ink2,fontSize:10,formatter:function(){return '';}},
+          data:[]}};
+    })
+  };
+}
+
+/* ===== 变迁 diverging ===== */
+function changeOption(){
+  var rows=Object.keys(IND).map(function(k){return[k,IND[k][7]-IND[k][0],IND[k][0],IND[k][7]];});
+  rows.sort(function(a,b){return a[1]-b[1];});
+  var names=rows.map(function(r){return r[0];});
+  var vals=rows.map(function(r){return r[1];});
+  return {
+    animationDuration:750,
+    grid:{left:8,right:44,top:14,bottom:18,containLabel:true},
+    tooltip:{trigger:'axis',triggerOn:'mousemove|click',confine:true,axisPointer:{type:'shadow'},
+      backgroundColor:TT.axis.backgroundColor,borderColor:TT.axis.borderColor,
+      textStyle:TT.axis.textStyle,padding:TT.axis.padding,
+      formatter:function(p){
+        var r=rows[p[0].dataIndex],g=r[1]/r[2]*100;
+        return FULL[r[0]]+'\n2016：'+fmt(r[2])+' → 2023：'+fmt(r[3])+' 万人\n'
+          +'变化：'+(r[1]>=0?'+':'')+r[1]+' 万人（'+(g>=0?'+':'')+g.toFixed(1)+'%）';}},
+    xAxis:{type:'value',min:-350,max:350,interval:100,
+      axisLabel:{color:C.ink2,fontSize:11,formatter:function(v){return v===0?'0':(v>0?'+'+v:''+v);}},
+      splitLine:{lineStyle:{color:C.grid}},axisLine:{show:false},axisTick:{show:false}},
+    yAxis:{type:'category',data:names,axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},
+      axisLabel:{color:C.ink,fontSize:11.5,formatter:function(v){return v.length>6?v.slice(0,6)+'…':v;}}},
+    series:[{type:'bar',barWidth:'62%',
+      data:vals.map(function(v){
+        return {value:v,itemStyle:{color:v>=0?C.up:C.down,borderRadius:v>=0?[0,3,3,0]:[3,0,0,3]}};}),
+      label:{show:true,position:function(p){return p.value>=0?'right':'left';},fontSize:10.5,
+        color:C.ink,formatter:function(p){return (p.value>=0?'+':'')+p.value;}}}]
+  };
+}
+
+/* ===== 公共服务占比 ===== */
+function shareOption(i){
+  var sh=YEARS.map(function(_,k){
+    var v=IND["公共管理"][k]+IND["教育"][k]+IND["卫生社保"][k];
+    return +(v/TOTAL[k]*100).toFixed(1);});
+  return {
+    animationDuration:700,
+    grid:{left:44,right:40,top:40,bottom:30,containLabel:true},
+    tooltip:{trigger:'axis',triggerOn:'mousemove|click',confine:true,
+      backgroundColor:TT.axis.backgroundColor,borderColor:TT.axis.borderColor,
+      textStyle:TT.axis.textStyle,padding:TT.axis.padding,
+      formatter:function(p){
+        var k=p[0].dataIndex,v=IND["公共管理"][k]+IND["教育"][k]+IND["卫生社保"][k];
+        return YEARS[k]+'年\n三行业合计：'+fmt(v)+' 万人\n占比：'+sh[k]+'%';}},
+    xAxis:{type:'category',data:YEARS,boundaryGap:false,
+      axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:{color:C.ink2,fontSize:12}},
+    yAxis:{type:'value',min:60,max:94,
+      axisLabel:{color:C.ink2,fontSize:11,formatter:function(v){return v===60||v===70||v===80||v===90?v+'%':'';}},
+      splitLine:{lineStyle:{color:C.grid}},axisLine:{show:false},axisTick:{show:false}},
+    series:[
+      {type:'line',
+        data:sh.map(function(v,k){
+          if(k===0)return {value:v,label:{show:true,position:[2,-16],align:'left',fontSize:11,color:C.gold,fontWeight:'bold'}};
+          if(k===sh.length-1)return {value:v,label:{show:true,position:[-36,-16],align:'left',fontSize:11,color:C.gold,fontWeight:'bold'}};
+          return v;}),
+        smooth:false,symbol:'circle',symbolSize:7,
+        lineStyle:{color:C.gold,width:2.5},itemStyle:{color:C.gold},
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+          {offset:0,color:'rgba(217,164,65,0.28)'},{offset:1,color:'rgba(217,164,65,0.02)'}])},
+        label:{show:false}},
+      {type:'scatter',data:sh.map(function(v,k){return k===i?v:null;}),symbolSize:13,
+        itemStyle:{color:C.teal,borderColor:'#0C1418',borderWidth:2},z:5,silent:true,tooltip:{show:false}}
+    ]
+  };
+}
+
+/* ============ 渲染 ============ */
+function render(){
+  var i=state.idx;
+  slider.value=i;
+  slider.style.setProperty('--fill',(i/7*100)+'%');
+  yearText.textContent=YEARS[i];
+  document.getElementById('rankTitle').textContent=YEARS[i]+' 行业规模 Top 10';
+  document.getElementById('rankSub').textContent=state.rankMode==='count'?'横向条形按就业人数降序':'横向条形按占总量比重降序';
+  document.getElementById('kpis').innerHTML=kpiHTML(i);
+  animateKPI(i);
+  cTotal.setOption(totalOption(i));
+  cRank.setOption(rankOption(i,state.rankMode));
+  cTree.setOption(treeOption(i));
+  cShare.setOption(shareOption(i));
+}
+function selectYear(i){state.idx=i;render();}
+
+/* 排行 人数/占比 切换 */
+document.getElementById('rankSeg').addEventListener('click',function(e){
+  var b=e.target;if(b.tagName!=='BUTTON')return;
+  state.rankMode=b.getAttribute('data-m');
+  var bs=this.querySelectorAll('button');
+  for(var k=0;k<bs.length;k++)bs[k].classList.toggle('on',bs[k]===b);
+  cRank.setOption(rankOption(state.idx,state.rankMode),true);
+  document.getElementById('rankSub').textContent=state.rankMode==='count'?'横向条形按就业人数降序':'横向条形按占总量比重降序';
+});
+
+cTotal.on('click',function(p){if(p.componentType==='series')selectYear(p.dataIndex);});
+cTree.on('click',function(){});
+cChange.setOption(changeOption());
+cTrend.setOption(trendOption());
+slider.style.setProperty('--fill','100%');
+render();
+
+window.addEventListener('resize',function(){
+  cTotal.resize();cRank.resize();cTree.resize();cTrend.resize();cChange.resize();cShare.resize();
+});
+</script>
+</body>
+</html>
