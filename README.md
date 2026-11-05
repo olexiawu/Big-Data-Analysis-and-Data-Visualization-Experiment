@@ -35,7 +35,7 @@
 - [p28](#p28)
 - [p29](#p29)
 - [p30](#p30)
-- 国有单位就业人员 · 年度数据中枢
+- [国有单位就业人员 · 年度数据中枢](#国有单位就业人员 · 年度数据中枢)
 ---
 
 ### p1
@@ -217,7 +217,8 @@
 代码：[src/Experiment1(p30).py](./src/Experiment1(p30).py)
 
 <img src="./outputs/p30.png" width="550">
-
+###国有单位就业人员 · 年度数据中枢
+点击进入驾驶舱：[https://olexiawu.github.io/data-cockpit/](https://olexiawu.github.io/data-cockpit/)
 ---
 
 ## 运行说明
