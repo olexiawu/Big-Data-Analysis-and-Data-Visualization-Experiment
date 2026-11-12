@@ -36,6 +36,7 @@
 - [p29](#p29)
 - [p30](#p30)
 - [国有单位就业人员·年度数据中枢](#state-employed)
+- [国民经济核算·季度数据驾驶舱](#national-accounts)
 
 ---
 
@@ -222,6 +223,18 @@
 ### 国有单位就业人员 · 年度数据中枢
 
 点击进入驾驶舱：https://olexiawu.github.io/data-cockpit/
+
+<a id="national-accounts"></a>
+
+### 国民经济核算 · 季度数据驾驶舱
+
+基于国家统计局季度数据（2025Q2 – 2026Q3）的可视化驾驶舱，手写 SVG 图表，无第三方依赖。
+
+入口：[national-accounts-dashboard/index.html](./national-accounts-dashboard/index.html)  
+在线预览：https://olexiawu.github.io/Big-Data-Analysis-and-Data-Visualization-Experiment/national-accounts-dashboard/
+
+<img src="./national-accounts-dashboard/docs/preview.png" width="550">
+
 ---
 
 ## 运行说明
@@ -232,4 +245,5 @@
 
 ## 完成情况
 
-✅ p1 ~ p30 全部实验代码与可视化图表已完成
+✅ p1 ~ p30 全部实验代码与可视化图表已完成  
+✅ 2 个数据驾驶舱：国有单位就业、国民经济核算

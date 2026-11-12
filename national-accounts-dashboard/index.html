@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>国民经济核算 · 季度数据驾驶舱</title>
+  <meta name="description" content="基于国家统计局季度数据的中国国民经济核算可视化驾驶舱：GDP 总量、三次产业结构、行业增加值、增速对比与季度热力。" />
+  <meta name="theme-color" content="#04070e" />
+  <meta property="og:title" content="国民经济核算 · 季度数据驾驶舱" />
+  <meta property="og:description" content="GDP / 三次产业 / 行业增加值 —— 国家统计局季度数据可视化驾驶舱" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23050a14'/%3E%3Cpath d='M8 22V14M16 22V9M24 22V17' stroke='%2322d3ee' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-scan"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" role="presentation">
+          <defs>
+            <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#67e8f9" />
+              <stop offset="0.55" stop-color="#22d3ee" />
+              <stop offset="1" stop-color="#8b5cf6" />
+            </linearGradient>
+          </defs>
+          <rect x="1" y="1" width="42" height="42" rx="12" fill="rgba(34,211,238,.06)" stroke="url(#brandGrad)" stroke-width="1.2" />
+          <path d="M13 30V21M22 30V13M31 30V24" stroke="url(#brandGrad)" stroke-width="2.6" stroke-linecap="round" />
+          <path d="M11 34h22" stroke="rgba(148,197,255,.35)" stroke-width="1.2" stroke-linecap="round" />
+          <circle cx="31" cy="20" r="2.2" fill="#67e8f9" />
+        </svg>
+      </div>
+      <div class="brand__text">
+        <p class="brand__eyebrow">National Accounts · Quarterly Cockpit</p>
+        <h1>国民经济核算 <span>季度数据驾驶舱</span></h1>
+      </div>
+    </div>
+
+    <div class="topbar__right">
+      <div class="qbar">
+        <span class="qbar__label">统计季度</span>
+        <div class="quarters" id="quarters" role="group" aria-label="选择统计季度"></div>
+      </div>
+      <div class="status">
+        <div class="status__line"><i class="dot"></i><span>数据链路正常</span></div>
+        <div class="status__clock" id="clock">--:--:--</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="deck">
+    <section class="kpis" id="kpis" aria-label="关键指标"></section>
+
+    <section class="grid" aria-label="分析图表">
+      <article class="panel panel--main" data-span="8">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Output · Structure</p>
+            <h2 class="panel__title">当季 GDP 与三次产业构成</h2>
+          </div>
+          <div class="legend legend--inline" id="legend-main"></div>
+        </header>
+        <div class="panel__body">
+          <div class="chart" id="chart-main"></div>
+        </div>
+      </article>
+
+      <article class="panel panel--donut" data-span="4">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Composition</p>
+            <h2 class="panel__title">三次产业结构</h2>
+          </div>
+          <span class="tag tag--live" id="tag-donut">—</span>
+        </header>
+        <div class="panel__body">
+          <div class="chart chart--donut" id="chart-donut"></div>
+        </div>
+      </article>
+
+      <article class="panel" data-span="4">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Ranking</p>
+            <h2 class="panel__title">行业增加值排行</h2>
+          </div>
+          <span class="tag" id="tag-rank">—</span>
+        </header>
+        <div class="panel__body">
+          <div class="chart" id="chart-rank"></div>
+        </div>
+      </article>
+
+      <article class="panel" data-span="4">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Momentum</p>
+            <h2 class="panel__title">行业增速</h2>
+          </div>
+          <span class="tag" id="tag-growth">—</span>
+        </header>
+        <div class="panel__body">
+          <div class="chart" id="chart-growth"></div>
+        </div>
+      </article>
+
+      <article class="panel" data-span="4">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Heatmap</p>
+            <h2 class="panel__title">行业增速热力</h2>
+          </div>
+          <span class="heat-legend" id="legend-heat" aria-hidden="true">
+            <span>降</span><i class="heat-ramp"></i><span>升</span>
+          </span>
+        </header>
+        <div class="panel__body">
+          <div class="chart" id="chart-heat"></div>
+        </div>
+      </article>
+
+      <article class="panel" data-span="7">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Year-to-date</p>
+            <h2 class="panel__title">年度累计 GDP 进度对比</h2>
+          </div>
+          <div class="legend legend--inline" id="legend-cum"></div>
+        </header>
+        <div class="panel__body">
+          <div class="chart" id="chart-cum"></div>
+        </div>
+      </article>
+
+      <article class="panel" data-span="5">
+        <header class="panel__head">
+          <div>
+            <p class="panel__eyebrow">Ledger</p>
+            <h2 class="panel__title">季度指标明细</h2>
+          </div>
+          <span class="tag" id="tag-table">—</span>
+        </header>
+        <div class="panel__body">
+          <div class="table-wrap" id="table-wrap"></div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="foot">
+      <div class="foot__left">
+        <span>数据来源 · 国家统计局</span>
+        <span>计量口径 · 按当年价格计算，累计数据由当季数据相加</span>
+      </div>
+      <div class="foot__right">
+        <span>更新 · <b id="foot-updated">—</b></span>
+        <span>© 2026 For study &amp; research</span>
+      </div>
+    </footer>
+  </main>
+
+  <div class="tooltip" id="tooltip" role="tooltip" aria-hidden="true"></div>
+
+  <noscript><p class="noscript">本驾驶舱需要启用 JavaScript 才能渲染图表。</p></noscript>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
