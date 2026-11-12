@@ -230,10 +230,10 @@
 
 基于国家统计局季度数据（2025Q2 – 2026Q3）的可视化驾驶舱，手写 SVG 图表，无第三方依赖。
 
-入口：[national-accounts-dashboard/index.html](./national-accounts-dashboard/index.html)  
+入口：[docs/national-accounts-dashboard/index.html](./docs/national-accounts-dashboard/index.html)  
 在线预览：https://olexiawu.github.io/Big-Data-Analysis-and-Data-Visualization-Experiment/national-accounts-dashboard/
 
-<img src="./national-accounts-dashboard/docs/preview.png" width="550">
+<img src="./docs/national-accounts-dashboard/docs/preview.png" width="550">
 
 ---
 

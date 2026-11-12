@@ -37,7 +37,7 @@
 2. 或启动本地静态服务器（推荐）
 
 ```bash
-cd national-accounts-dashboard
+cd docs/national-accounts-dashboard
 python -m http.server 8000
 # 浏览器访问 http://localhost:8000
 ```
